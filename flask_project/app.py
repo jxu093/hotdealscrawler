@@ -5,16 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'Flask is running!'
-
-
-@app.route('/data')
-def names():
-    data = {
-        "first_names": ["John", "Jacob", "Julie", "Jenny"]
-    }
-    return jsonify(data)
-
+    return 'hi'
 
 if __name__ == '__main__':
     app.run()

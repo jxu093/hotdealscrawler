@@ -4,6 +4,7 @@
 
 from fabric.api import cd, env, lcd, put, prompt, local, sudo
 from fabric.contrib.files import exists
+from key import login
 
 
 ##############
@@ -19,9 +20,9 @@ remote_flask_dir = remote_app_dir + '/flask_project'
 remote_nginx_dir = '/etc/nginx/sites-enabled'
 remote_supervisor_dir = '/etc/supervisor/conf.d'
 
-env.hosts = ['add_ip_or_domain']  # replace with IP address or hostname
-env.user = 'newuser'
-# env.password = 'blah!'
+env.hosts = login.SERVER_IP
+env.user = login.SERVER_USER
+env.password = login.SERVER_PASSWORD
 
 
 #############
