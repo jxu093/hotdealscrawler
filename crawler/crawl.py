@@ -20,7 +20,7 @@ def start(pages):
     session = DBSession()
 
     # clear db
-    model.Thread.query.delete()
+    session.query(model.Thread).delete()
     session.commit()
     
     # do crawling
