@@ -3,6 +3,8 @@ import requests
 
 from operator import itemgetter
 
+import model
+from sqlalchemy.orm import sessionmaker
 
 RFD_DEALS_URL = 'http://forums.redflagdeals.com/hot-deals-f9/'
 RFD_URL = 'http://forums.redflagdeals.com'
@@ -12,7 +14,14 @@ saved_threads = []
 
 
 def start(pages):
+    # load db
+    model.Base.metadata.bind = model.engine
+    DBSession = sessionmaker(bind=model.engine)
+    session = DBSession()
+
     # clear db
+    model.Thread.query.delete()
+    session.commit()
     
     # do crawling
     for i in range(1, pages):
@@ -27,9 +36,13 @@ def start(pages):
     saved_threads = sorted(saved_threads, key=itemgetter('views'), reverse=True)
 
     # write to db
+    for thread in saved_threads:
+        new_thread = model.Thread(thread.id, thread.title, thread.views, thread.url, thread.lastpostdate)
+        session.add(new_thread)
+    session.commit()
 
     # debug
-    pretty_print(saved_threads)
+    # pretty_print(saved_threads)
 
 
 def parse_page(page):
@@ -82,6 +95,7 @@ def parse_threadbit(tbit):
     saved_threads.append(thread)
 
 
+# useless debug method
 def pretty_print(threadlist):
     count = 0
     for thread in threadlist:
