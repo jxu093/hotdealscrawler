@@ -37,7 +37,7 @@ def start(pages):
 
     # write to db
     for thread in saved_threads:
-        new_thread = model.Thread(thread.id, thread.title, thread.views, thread.url, thread.lastpostdate)
+        new_thread = model.Thread(thread['id'], thread['title'], thread['views'], thread['url'], thread['lastpostdate'])
         session.add(new_thread)
     session.commit()
 
