@@ -5,7 +5,8 @@ from sqlalchemy.ext.declarative import declarative_base
 # from app import db
 
 Base = declarative_base()
-engine = create_engine('sqlite:////home/dev/sq3db.db')
+# engine = create_engine('sqlite:////home/dev/sq3db.db')
+engine = create_engine('sqlite:///sq3db.db')
 
 
 class Thread(Base):

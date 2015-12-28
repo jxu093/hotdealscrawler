@@ -11,6 +11,7 @@ RFD_URL = 'http://forums.redflagdeals.com'
 
 
 saved_threads = []
+# ids = {} # debugging
 
 
 def start(pages):
@@ -39,6 +40,12 @@ def start(pages):
     for thread in saved_threads:
         new_thread = model.Thread(thread['id'], thread['title'], thread['views'], thread['url'], thread['lastpostdate'])
         session.add(new_thread)
+        # code for debugging duplicate ids
+        # if thread['id'] in ids:
+        #     ids[thread['id']] += 1
+        #     print thread['id'] + thread['title']
+        # else:
+        #     ids[thread['id']] = 1
     session.commit()
 
     # debug
@@ -47,7 +54,7 @@ def start(pages):
 
 def parse_page(page):
     soup = BeautifulSoup(page, 'html.parser')
-    threads = soup.find_all('li', class_='threadbit')
+    threads = soup.find('ol', id='threads').find_all('li', class_='threadbit')
     for thread in threads:
         parse_threadbit(thread)
 
