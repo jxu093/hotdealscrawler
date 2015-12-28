@@ -11,7 +11,7 @@ from key import login
 ### config ###
 ##############
 
-local_app_dir = './flask_project'
+local_app_dir = './'
 local_config_dir = './config'
 
 remote_app_dir = '/home/www'
